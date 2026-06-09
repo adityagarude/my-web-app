@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Hub Pro — Your AI Operating System</title>
+<title>AI Vault — Your AI Operating System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
@@ -1433,25 +1433,48 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
 
 /* ═══════════════════════════════════════════════════
    MOBILE BOTTOM NAV
+═══════════════════════════════════════════════════ */
 #mobile-bottom-nav {
   display: none;
   position: fixed; bottom: 0; left: 0; right: 0;
   background: var(--bg-2);
   border-top: 1px solid var(--border);
   z-index: 150;
-  padding: 6px 0 max(6px, env(safe-area-inset-bottom));
+  padding: 6px 0;
+  padding-bottom: max(6px, env(safe-area-inset-bottom));
   grid-template-columns: repeat(5, 1fr);
 }
 .mob-nav-item {
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
-  padding: 6px 4px;
-  color: var(--text-3); font-size: 0.6rem; cursor: pointer;
-  transition: color 0.15s;
-  border: none; background: none;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 8px 4px 6px;
+  color: var(--text-3); font-size: 0.62rem; font-weight: 500;
+  cursor: pointer; transition: color 0.15s;
+  border: none; background: none; font-family: system-ui, sans-serif;
+  letter-spacing: 0.01em;
 }
-.mob-nav-item .mob-icon { font-size: 1.35rem; line-height: 1; }
+.mob-nav-item .mob-icon {
+  font-size: 1.3rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 28px;
+  border-radius: 10px;
+  transition: background 0.15s;
+}
 .mob-nav-item.active { color: var(--accent); }
+.mob-nav-item.active .mob-icon {
+  background: rgba(var(--accent-rgb), 0.12);
+}
 .mob-nav-item:hover { color: var(--text-2); }
+/* More menu sheet */
+.more-menu-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text); font-size: 0.88rem; font-weight: 500;
+  cursor: pointer; transition: all 0.15s; text-align: left;
+  font-family: system-ui, sans-serif;
+}
+.more-menu-item:hover { background: var(--bg-4); border-color: var(--border-2); }
 
 
 
@@ -1472,9 +1495,9 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
   }
   #sidebar.open { transform: translateX(0); }
   .sidebar-overlay.show { display: block; }
-  #main-content { margin-left: 0; padding-bottom: 64px; }
+  #main-content { margin-left: 0; padding-bottom: 72px; }
   .topnav-hamburger { display: flex; }
-  .topnav-search { max-width: 200px; }
+  .topnav-search { max-width: 180px; }
   .dashboard-grid { grid-template-columns: 1fr 1fr; }
   .spend-overview { grid-template-columns: 1fr 1fr; }
   .settings-layout { grid-template-columns: 1fr; }
@@ -1482,17 +1505,22 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
   .analytics-charts { grid-template-columns: 1fr; }
   .auth-left { display: none; }
   .auth-right { width: 100%; }
-  .landing-hero { padding: 60px 20px 48px; }
+  .landing-hero { padding: 56px 20px 44px; }
   .landing-nav { padding: 0 20px; }
   .landing-nav-links { display: none; }
-  .landing-stats { flex-wrap: wrap; gap: 20px; padding: 28px 20px; }
-  .landing-features { padding: 40px 20px; grid-template-columns: 1fr; }
-  .page-content { padding: 16px 14px; }
-  .profile-header { flex-direction: column; align-items: center; text-align: center; padding: 24px 20px; }
+  .landing-stats { flex-wrap: wrap; gap: 18px; padding: 24px 20px; }
+  .landing-features { padding: 36px 20px; grid-template-columns: 1fr; }
+  .page-content { padding: 14px 12px; }
+  .profile-header { flex-direction: column; align-items: center; text-align: center; padding: 22px 16px; }
   .sub-table th:nth-child(2), .sub-table td:nth-child(2) { display: none; }
   #mobile-bottom-nav { display: grid; }
-  /* stack dashboard columns on mid-mobile */
-  .dash-two-col { display: flex !important; flex-direction: column !important; gap: 20px; }
+  .dash-two-col { display: flex !important; flex-direction: column !important; gap: 16px; }
+  /* Topnav title shorter on mobile */
+  .page-title { font-size: 0.9rem; max-width: 120px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  /* Modals full-width on mobile */
+  .modal { padding: 18px 14px; }
+  .modal.wide { max-width: 100%; }
+  .modal.narrow { max-width: 100%; }
 }
 @media (max-width: 480px) {
   .dashboard-grid { grid-template-columns: 1fr 1fr; }
@@ -1501,13 +1529,33 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
   .spend-overview { grid-template-columns: 1fr; }
   .vault-grid { grid-template-columns: 1fr; }
   .topnav-search { display: none; }
-  .modal { padding: 20px 16px; }
   .form-row { flex-direction: column; }
-  .landing-title { font-size: 2rem; }
+  .landing-title { font-size: 1.85rem; }
+  /* Watchlist grid single col on small phones */
+  #watchlist-grid { grid-template-columns: 1fr !important; }
+  /* KPI cards compact */
+  .kpi-val { font-size: 1.4rem; }
+  .kpi-icon { width: 36px; height: 36px; font-size: 1.1rem; }
 }
 @media (max-width: 360px) {
   .dashboard-grid { grid-template-columns: 1fr; }
-  .page-content { padding: 12px 10px; }
+  .page-content { padding: 10px 8px; }
+  .kpi-card { padding: 12px; gap: 10px; }
+}
+/* Tablet - iPad range: sidebar always hidden, wider bottom nav area */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root { --sidebar-w: 220px; }
+  #main-content { margin-left: var(--sidebar-w); }
+  #topnav { padding: 0 18px; }
+  .page-content { padding: 18px; }
+  .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+}
+/* Safe area inset for notch phones */
+#mobile-bottom-nav {
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+}
+.page-content {
+  min-height: calc(100vh - 60px);
 }
 </style>
 </head>
@@ -1521,21 +1569,37 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
 <!-- MOBILE BOTTOM NAV -->
 <nav id="mobile-bottom-nav">
   <button class="mob-nav-item active" data-mob-page="dashboard" onclick="navigateTo('dashboard')">
-    <span class="mob-icon">📊</span><span>Home</span>
+    <span class="mob-icon">🏠</span><span>Home</span>
   </button>
   <button class="mob-nav-item" data-mob-page="directory" onclick="navigateTo('directory')">
-    <span class="mob-icon">🔍</span><span>Discover</span>
+    <span class="mob-icon">🔍</span><span>AI Tools</span>
   </button>
   <button class="mob-nav-item" data-mob-page="collections" onclick="navigateTo('collections')">
     <span class="mob-icon">🎬</span><span>Watchlist</span>
   </button>
   <button class="mob-nav-item" data-mob-page="workspace" onclick="navigateTo('workspace')">
-    <span class="mob-icon">🏢</span><span>Tasks</span>
+    <span class="mob-icon">📋</span><span>Tasks</span>
   </button>
-  <button class="mob-nav-item" data-mob-page="profile" onclick="navigateTo('profile')">
-    <span class="mob-icon">👤</span><span>Profile</span>
+  <button class="mob-nav-item" data-mob-page="more-menu" onclick="toggleMoreMenu()">
+    <span class="mob-icon">⋯</span><span>More</span>
   </button>
 </nav>
+
+<!-- MOBILE MORE MENU (slides up) -->
+<div id="more-menu-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:148;" onclick="closeMoreMenu()"></div>
+<div id="more-menu-sheet" style="display:none;position:fixed;bottom:64px;left:0;right:0;background:var(--bg-2);border-top:1px solid var(--border);border-radius:20px 20px 0 0;z-index:149;padding:16px 16px 8px;">
+  <div style="width:40px;height:4px;background:var(--border-2);border-radius:99px;margin:0 auto 16px;"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+    <button class="more-menu-item" onclick="closeMoreMenu();navigateTo('favorites')">⭐ Favorites</button>
+    <button class="more-menu-item" onclick="closeMoreMenu();navigateTo('subscriptions')">💳 Subscriptions</button>
+    <button class="more-menu-item" onclick="closeMoreMenu();navigateTo('compare')">⚖️ Compare</button>
+    <button class="more-menu-item" onclick="closeMoreMenu();navigateTo('recommend')">⚡ Recommend</button>
+    <button class="more-menu-item" onclick="closeMoreMenu();navigateTo('analytics')">📈 Analytics</button>
+    <button class="more-menu-item" onclick="closeMoreMenu();navigateTo('settings')">⚙️ Settings</button>
+  </div>
+  <button class="more-menu-item" style="width:100%;color:var(--accent);" onclick="closeMoreMenu();navigateTo('profile')">👤 My Profile</button>
+  <div style="height:8px;"></div>
+</div>
 
 <!-- ═══════════════════════════════════════════════════
      LANDING PAGE (shown to guests)
@@ -1544,7 +1608,7 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
   <nav class="landing-nav">
     <div class="landing-brand">
       <div class="landing-brand-icon">🤖</div>
-      <span>AI Hub <span style="color:var(--accent)">Pro</span></span>
+      <span>AI <span style="color:var(--accent)">Vault</span></span>
     </div>
     <div class="landing-nav-links">
       <a href="#" onclick="showLanding()">Features</a>
@@ -1615,7 +1679,7 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
     <div class="auth-left-content">
       <div class="auth-brand">
         <div class="auth-brand-icon">🤖</div>
-        <span class="auth-brand-name">AI Hub <span>Pro</span></span>
+        <span class="auth-brand-name">AI <span>Vault</span></span>
       </div>
       <h2 class="auth-headline">Your AI <span class="accent">Operating System</span> awaits.</h2>
       <p class="auth-tagline">Discover, organize, launch, compare, and manage your entire AI ecosystem from one premium workspace.</p>
@@ -1709,7 +1773,7 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
   <aside id="sidebar">
     <div class="sidebar-logo">
       <div class="sidebar-logo-icon">🤖</div>
-      <div class="sidebar-logo-text">AI Hub <span>Pro</span></div>
+      <div class="sidebar-logo-text">AI <span>Vault</span></div>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section">
@@ -1734,10 +1798,7 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
           <span class="nav-badge" id="fav-badge">0</span>
         </button>
         <button class="nav-item" data-page="collections" onclick="navigateTo('collections')">
-          <span class="nav-icon">📁</span> Collections
-        </button>
-        <button class="nav-item" data-page="vault" onclick="navigateTo('vault')">
-          <span class="nav-icon">🔐</span> My Vault
+          <span class="nav-icon">🎬</span> Watchlist
         </button>
         <button class="nav-item" data-page="subscriptions" onclick="navigateTo('subscriptions')">
           <span class="nav-icon">💳</span> Subscriptions
@@ -1808,7 +1869,7 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
 
         <!-- KPI Row -->
         <div class="dashboard-grid" style="margin-bottom:20px;">
-          <div class="kpi-card">
+          <div class="kpi-card" onclick="navigateTo('directory')" style="cursor:pointer;" title="Browse AI Directory">
             <div class="kpi-icon" style="background:rgba(96,165,250,0.12);color:#60a5fa;">🤖</div>
             <div class="kpi-body">
               <div class="kpi-val" id="dash-total">150+</div>
@@ -1817,7 +1878,7 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
             </div>
             <div class="kpi-sparkline" id="sp-tools"></div>
           </div>
-          <div class="kpi-card">
+          <div class="kpi-card" onclick="navigateTo('favorites')" style="cursor:pointer;" title="View Favorites">
             <div class="kpi-icon" style="background:rgba(251,191,36,0.12);color:#fbbf24;">⭐</div>
             <div class="kpi-body">
               <div class="kpi-val" id="dash-favs">0</div>
@@ -1826,7 +1887,7 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
             </div>
             <div class="kpi-sparkline" id="sp-favs"></div>
           </div>
-          <div class="kpi-card">
+          <div class="kpi-card" onclick="navigateTo('subscriptions')" style="cursor:pointer;" title="Manage Subscriptions">
             <div class="kpi-icon" style="background:rgba(248,113,113,0.12);color:#f87171;">💳</div>
             <div class="kpi-body">
               <div class="kpi-val" id="dash-spend">$0</div>
@@ -1835,7 +1896,7 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
             </div>
             <div class="kpi-sparkline" id="sp-spend"></div>
           </div>
-          <div class="kpi-card">
+          <div class="kpi-card" onclick="navigateTo('collections')" style="cursor:pointer;" title="Open Watchlist">
             <div class="kpi-icon" style="background:rgba(167,139,250,0.12);color:#a78bfa;">🎬</div>
             <div class="kpi-body">
               <div class="kpi-val" id="dash-watchlist">0</div>
@@ -2038,36 +2099,35 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
 
       <!-- ── COLLECTIONS (Watchlist / Link Manager) ── -->
       <div class="page" id="page-collections">
-        <!-- Tab bar -->
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
-          <div style="display:flex;gap:6px;background:var(--bg-3);border-radius:var(--radius-sm);padding:4px;">
-            <button class="wl-tab active" data-tab="to-watch" onclick="switchWLTab('to-watch',this)">👀 To Watch</button>
-            <button class="wl-tab" data-tab="later" onclick="switchWLTab('later',this)">🕐 Later</button>
-            <button class="wl-tab" data-tab="completed" onclick="switchWLTab('completed',this)">✅ Completed</button>
+        <!-- Top toolbar -->
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+          <div class="search-bar" style="min-width:180px;flex:1;max-width:320px;">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="wl-search" placeholder="Search watchlist..." oninput="renderWatchlist()">
           </div>
-          <div style="display:flex;gap:8px;">
-            <select class="filter-select" id="wl-type-filter" onchange="renderWatchlist()" style="font-size:0.8rem;padding:7px 10px;">
-              <option value="">All Types</option>
-              <option value="movie">🎬 Movies</option>
-              <option value="series">📺 Web Series</option>
-              <option value="youtube">▶️ YouTube</option>
-              <option value="reel">📱 Reels</option>
-              <option value="article">📰 Articles</option>
-              <option value="podcast">🎙️ Podcast</option>
-              <option value="other">🔗 Other</option>
-            </select>
-            <button class="btn btn-primary btn-sm" onclick="showAddLinkModal()">+ Add Link</button>
-          </div>
+          <button class="btn btn-primary btn-sm" onclick="showAddLinkModal()" style="flex-shrink:0;">+ Add Link</button>
         </div>
-        <!-- Search bar for watchlist -->
-        <div class="search-bar" style="margin-bottom:16px;max-width:400px;">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="wl-search" placeholder="Search watchlist..." oninput="renderWatchlist()">
+
+        <!-- Status tabs -->
+        <div style="display:flex;gap:4px;background:var(--bg-3);border-radius:var(--radius-sm);padding:4px;margin-bottom:16px;overflow-x:auto;flex-shrink:0;">
+          <button class="wl-tab active" data-tab="all"        onclick="switchWLTab('all',this)">📋 All</button>
+          <button class="wl-tab"        data-tab="to-watch"   onclick="switchWLTab('to-watch',this)">👀 To Watch</button>
+          <button class="wl-tab"        data-tab="watching"   onclick="switchWLTab('watching',this)">▶️ Watching</button>
+          <button class="wl-tab"        data-tab="on-hold"    onclick="switchWLTab('on-hold',this)">⏸ On Hold</button>
+          <button class="wl-tab"        data-tab="completed"  onclick="switchWLTab('completed',this)">✅ Completed</button>
+          <button class="wl-tab"        data-tab="dropped"    onclick="switchWLTab('dropped',this)">🗑 Dropped</button>
         </div>
-        <!-- Stats row -->
-        <div id="wl-stats" style="display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;"></div>
-        <!-- Grid -->
-        <div id="watchlist-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;"></div>
+
+        <!-- Type filter chips -->
+        <div id="wl-type-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;"></div>
+
+        <!-- Stats strip -->
+        <div id="wl-stats" style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;"></div>
+
+        <!-- Sectioned content by type -->
+        <div id="watchlist-sections"></div>
+
+        <!-- Empty state -->
         <div id="watchlist-empty" class="empty-state" style="display:none;">
           <div class="empty-icon">🎬</div>
           <div class="empty-title">Nothing here yet</div>
@@ -2399,7 +2459,7 @@ h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
               <div class="settings-section">
                 <div class="settings-section-title">Import Data</div>
                 <div class="settings-row">
-                  <div><div class="settings-row-label">Import JSON Backup</div><div class="settings-row-sub">Restore from AI Hub Pro backup</div></div>
+                  <div><div class="settings-row-label">Import JSON Backup</div><div class="settings-row-sub">Restore from AI Vault backup</div></div>
                   <button class="btn btn-ghost btn-sm" onclick="triggerImport('json')">⬆ JSON</button>
                 </div>
                 <div class="settings-row">
@@ -2683,28 +2743,51 @@ function saveState() {
     favorites: state.favorites,
     subscriptions: state.subscriptions,
     collections: state.collections,
+    watchlist: state.watchlist,
+    tasks: state.tasks,
+    rituals: state.rituals,
+    notes: state.notes,
+    goals: state.goals,
+    wsLinks: state.wsLinks,
     vaultTools: state.vaultTools,
     workspaces: state.workspaces,
     usageHistory: state.usageHistory,
     settings: state.settings,
   };
-  localStorage.setItem('aihubpro_state', JSON.stringify(data));
+  try { localStorage.setItem('aivault_state', JSON.stringify(data)); } catch(e) { console.warn('Save failed', e); }
+  // Also keep old key in sync for migration
+  try { localStorage.setItem('aihubpro_state', JSON.stringify(data)); } catch(e) {}
 }
 
 function loadState() {
   try {
-    const raw = localStorage.getItem('aihubpro_state');
+    // Try new key first, fall back to old
+    const raw = localStorage.getItem('aivault_state') || localStorage.getItem('aihubpro_state');
     if (raw) {
       const data = JSON.parse(raw);
       Object.assign(state, data);
     }
   } catch(e) { console.warn('State load error', e); }
+  // Ensure all arrays exist
+  if (!Array.isArray(state.favorites))     state.favorites = [];
+  if (!Array.isArray(state.subscriptions)) state.subscriptions = [];
+  if (!Array.isArray(state.collections))   state.collections = [];
+  if (!Array.isArray(state.watchlist))     state.watchlist = [];
+  if (!Array.isArray(state.tasks))         state.tasks = [];
+  if (!Array.isArray(state.rituals))       state.rituals = [];
+  if (!Array.isArray(state.notes))         state.notes = [];
+  if (!Array.isArray(state.goals))         state.goals = [];
+  if (!Array.isArray(state.wsLinks))       state.wsLinks = [];
+  if (!Array.isArray(state.vaultTools))    state.vaultTools = [];
+  if (!Array.isArray(state.workspaces))    state.workspaces = [];
+  if (!Array.isArray(state.usageHistory))  state.usageHistory = [];
+  if (!state.settings) state.settings = { theme:'dark', accent:0, fontSize:14 };
 }
 
 function getUsers() {
-  try { return JSON.parse(localStorage.getItem('aihubpro_users') || '{}'); } catch(e) { return {}; }
+  try { return JSON.parse(localStorage.getItem('aivault_users') || '{}'); } catch(e) { return {}; }
 }
-function saveUsers(users) { localStorage.setItem('aihubpro_users', JSON.stringify(users)); }
+function saveUsers(users) { localStorage.setItem('aivault_users', JSON.stringify(users)); }
 
 /* ═══════════════════════════════════════════════════
    TOAST
@@ -2788,7 +2871,7 @@ function handleLogin() {
   }
   state.currentUser = { email: user.email, name: user.name, photo: user.photo, joined: user.joined };
   const remember = document.getElementById('remember-me').checked;
-  if (remember) { localStorage.setItem('aihubpro_remember', email); }
+  if (remember) { localStorage.setItem('aivault_remember', email); }
   saveState();
   toast(`Welcome back, ${user.name}! 👋`);
   showApp();
@@ -2886,7 +2969,7 @@ function navigateTo(page) {
   // Update page title
   const titles = {
     dashboard:'Dashboard', directory:'AI Directory', favorites:'Favorites',
-    subscriptions:'Subscriptions', collections:'🎬 Watchlist', vault:'My Vault',
+    subscriptions:'Subscriptions', collections:'🎬 Watchlist', vault:'',
     compare:'Compare AI', recommend:'AI Recommender', analytics:'Analytics',
     workspace:'My Workspace', profile:'Profile', settings:'Settings'
   };
@@ -2918,6 +3001,17 @@ function renderCurrentPage() {
 /* ═══════════════════════════════════════════════════
    SIDEBAR
 ═══════════════════════════════════════════════════ */
+function toggleMoreMenu() {
+  const sheet = document.getElementById('more-menu-sheet');
+  const overlay = document.getElementById('more-menu-overlay');
+  const isOpen = sheet.style.display !== 'none';
+  sheet.style.display = isOpen ? 'none' : 'block';
+  overlay.style.display = isOpen ? 'none' : 'block';
+}
+function closeMoreMenu() {
+  document.getElementById('more-menu-sheet').style.display = 'none';
+  document.getElementById('more-menu-overlay').style.display = 'none';
+}
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebar-overlay');
@@ -3714,14 +3808,8 @@ function deleteSubscription(i) {
 /* ═══════════════════════════════════════════════════
    WATCHLIST / COLLECTIONS
 ═══════════════════════════════════════════════════ */
-let wlActiveTab = 'to-watch';
-
-function switchWLTab(tab, el) {
-  wlActiveTab = tab;
-  document.querySelectorAll('.wl-tab').forEach(t=>t.classList.remove('active'));
-  if (el) el.classList.add('active');
-  renderWatchlist();
-}
+let wlActiveTab = 'all';
+let wlTypeFilter = '';
 
 const WL_TYPE_META = {
   movie:   { label:'🎬 Movie',   emoji:'🎬' },
@@ -3733,72 +3821,167 @@ const WL_TYPE_META = {
   other:   { label:'🔗 Other',   emoji:'🔗' },
 };
 
+const WL_STATUSES = {
+  'to-watch':  { label:'To Watch',  color:'#60a5fa' },
+  'watching':  { label:'Watching',  color:'#a78bfa' },
+  'on-hold':   { label:'On Hold',   color:'#fbbf24' },
+  'completed': { label:'Completed', color:'#34d399' },
+  'dropped':   { label:'Dropped',   color:'#f87171' },
+};
+
+function switchWLTab(tab, el) {
+  wlActiveTab = tab;
+  document.querySelectorAll('.wl-tab').forEach(t=>t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  else document.querySelectorAll(`.wl-tab[data-tab="${tab}"]`).forEach(t=>t.classList.add('active'));
+  renderWatchlist();
+}
+
 function renderWatchlist() {
   if (!state.watchlist) state.watchlist = [];
-  const q = (document.getElementById('wl-search')?.value||'').toLowerCase();
-  const typeF = document.getElementById('wl-type-filter')?.value||'';
-  let items = state.watchlist.filter(i => {
-    const matchTab = i.status === wlActiveTab;
-    const matchQ = !q || i.title.toLowerCase().includes(q) || (i.note||'').toLowerCase().includes(q);
-    const matchType = !typeF || i.type === typeF;
-    return matchTab && matchQ && matchType;
+  const wl = state.watchlist;
+  const q  = (document.getElementById('wl-search')?.value||'').toLowerCase();
+
+  // Type chips
+  const typeChips = document.getElementById('wl-type-chips');
+  if (typeChips) {
+    const types = [...new Set(wl.map(i=>i.type).filter(Boolean))];
+    typeChips.innerHTML = `<button class="chip ${!wlTypeFilter?'active':''}" onclick="wlTypeFilter='';renderWatchlist()">All Types</button>` +
+      types.map(t=>{ const m=WL_TYPE_META[t]||{emoji:'🔗',label:t};
+        return `<button class="chip ${wlTypeFilter===t?'active':''}" onclick="wlTypeFilter='${t}';renderWatchlist()">${m.emoji} ${t}</button>`; }).join('');
+  }
+
+  // Filter
+  const filtered = wl.filter(i => {
+    const matchStatus = wlActiveTab==='all' || i.status===wlActiveTab;
+    const matchType   = !wlTypeFilter || i.type===wlTypeFilter;
+    const matchQ      = !q || i.title.toLowerCase().includes(q) || (i.note||'').toLowerCase().includes(q) || (i.tags||'').toLowerCase().includes(q);
+    return matchStatus && matchType && matchQ;
   });
-  const grid = document.getElementById('watchlist-grid');
-  const empty = document.getElementById('watchlist-empty');
-  // Stats
-  const total = state.watchlist.length;
-  const completed = state.watchlist.filter(i=>i.status==='completed').length;
-  const later = state.watchlist.filter(i=>i.status==='later').length;
-  const towatch = state.watchlist.filter(i=>i.status==='to-watch').length;
-  document.getElementById('wl-stats').innerHTML = `
-    <div class="wl-stat-pill">👀 <strong>${towatch}</strong> To Watch</div>
-    <div class="wl-stat-pill">🕐 <strong>${later}</strong> Later</div>
-    <div class="wl-stat-pill">✅ <strong>${completed}</strong> Done</div>
-    <div class="wl-stat-pill">📦 <strong>${total}</strong> Total</div>
-  `;
-  if (!items.length) {
-    grid.style.display = 'none';
-    empty.style.display = '';
-  } else {
-    empty.style.display = 'none';
-    grid.style.display = 'grid';
-    grid.innerHTML = items.map(item => {
-      const idx = state.watchlist.indexOf(item);
-      const meta = WL_TYPE_META[item.type] || WL_TYPE_META.other;
-      const statusColor = item.status==='completed'?'#34d399':item.status==='later'?'#fbbf24':'#60a5fa';
-      const statusLabel = item.status==='completed'?'✅ Done':item.status==='later'?'🕐 Later':'👀 To Watch';
-      const domain = (() => { try { return new URL(item.url||'').hostname.replace('www.',''); } catch(e){ return ''; } })();
-      return `
-        <div class="wl-card">
-          <div class="wl-card-thumb" style="${item.thumb?'':'background:linear-gradient(135deg,'+getCardGrad(item.type)+')'}">
-            ${item.thumb ? `<img src="${item.thumb}" alt="thumb" onerror="this.parentNode.innerHTML='${meta.emoji}'" loading="lazy">` : `<span>${meta.emoji}</span>`}
-            <div class="wl-type-badge">${meta.label}</div>
-            <div class="wl-status-badge" style="background:${statusColor}22;color:${statusColor};">${statusLabel}</div>
-          </div>
-          <div class="wl-card-body">
-            <div class="wl-card-title">${escHtml(item.title)}</div>
-            ${domain?`<div class="wl-card-url">${domain}</div>`:''}
-            ${item.note?`<div class="wl-card-note">${escHtml(item.note)}</div>`:''}
-            ${item.tags?`<div style="margin-top:8px;display:flex;gap:4px;flex-wrap:wrap;">${item.tags.split(',').map(t=>`<span style="background:var(--bg-3);border:1px solid var(--border);padding:2px 7px;border-radius:99px;font-size:0.68rem;color:var(--text-3);">${t.trim()}</span>`).join('')}</div>`:''}
-          </div>
-          <div class="wl-card-footer">
-            ${item.url ? `<a href="${item.url}" target="_blank" class="btn btn-primary btn-sm" style="font-size:0.75rem;padding:5px 12px;">Open →</a>` : ''}
-            <div style="margin-left:auto;display:flex;gap:4px;">
-              ${wlActiveTab!=='to-watch'?`<button class="btn btn-ghost btn-sm" title="To Watch" onclick="moveWLItem(${idx},'to-watch')">👀</button>`:''}
-              ${wlActiveTab!=='later'?`<button class="btn btn-ghost btn-sm" title="Save for Later" onclick="moveWLItem(${idx},'later')">🕐</button>`:''}
-              ${wlActiveTab!=='completed'?`<button class="btn btn-ghost btn-sm" title="Mark Done" onclick="moveWLItem(${idx},'completed')">✅</button>`:''}
-              <button class="btn btn-ghost btn-sm" onclick="editWLItem(${idx})">✏️</button>
-              <button class="btn btn-danger btn-sm" onclick="deleteWLItem(${idx})">🗑</button>
-            </div>
-          </div>
-        </div>`;
+
+  // Stats strip
+  const statsEl = document.getElementById('wl-stats');
+  if (statsEl) {
+    statsEl.innerHTML = Object.entries(WL_STATUSES).map(([k,v])=>{
+      const cnt = wl.filter(i=>i.status===k).length;
+      return `<div class="wl-stat-pill" onclick="switchWLTab('${k}',null)" style="cursor:pointer;">
+        <span style="font-weight:700;color:${v.color};">${cnt}</span>
+        <span style="color:var(--text-3);font-size:0.72rem;">${v.label}</span>
+      </div>`;
     }).join('');
   }
+
+  const sectionsEl = document.getElementById('watchlist-sections');
+  const emptyEl    = document.getElementById('watchlist-empty');
+
+  if (!filtered.length) {
+    if (sectionsEl) sectionsEl.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = '';
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = 'none';
+
+  // Group by type
+  const groups = {};
+  filtered.forEach(item => {
+    const t = item.type||'other';
+    if (!groups[t]) groups[t]=[];
+    groups[t].push(item);
+  });
+  const typeOrder = ['movie','series','youtube','reel','article','podcast','other'];
+  const sorted = Object.entries(groups).sort((a,b)=>(typeOrder.indexOf(a[0])+1||99)-(typeOrder.indexOf(b[0])+1||99));
+
+  if (sectionsEl) sectionsEl.innerHTML = sorted.map(([type, items]) => {
+    const meta = WL_TYPE_META[type]||{emoji:'🔗',label:'🔗 Other'};
+    const typeName = type.charAt(0).toUpperCase()+type.slice(1);
+    return `<div style="margin-bottom:24px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);">
+        <span style="font-size:1.2rem;">${meta.emoji}</span>
+        <span style="font-weight:700;font-family:system-ui,sans-serif;">${typeName}</span>
+        <span style="font-size:0.7rem;color:var(--text-3);background:var(--bg-3);padding:2px 8px;border-radius:99px;">${items.length}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;">
+        ${items.map(item => renderWLCard(item, wl.indexOf(item))).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderWLCard(item, idx) {
+  const meta    = WL_TYPE_META[item.type]||{label:'Other',emoji:'🔗'};
+  const status  = WL_STATUSES[item.status]||{label:item.status||'To Watch',color:'#60a5fa'};
+  const domain  = (() => { try { return new URL(item.url||'https://x').hostname.replace('www.',''); } catch(e){ return ''; }})();
+  const stars   = item.rating ? '★'.repeat(item.rating)+'☆'.repeat(5-item.rating) : '';
+  const prog    = item.status==='watching'&&item.progress>0
+    ? `<div style="margin-top:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:var(--text-3);margin-bottom:3px;">
+          <span>${item.progressNote||'Progress'}</span><span style="color:var(--accent);font-weight:700;">${item.progress}%</span>
+        </div>
+        <div style="height:4px;background:var(--bg-3);border-radius:99px;overflow:hidden;">
+          <div style="height:100%;width:${item.progress}%;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:99px;"></div>
+        </div>
+      </div>` : '';
+  const nextStatus = item.status==='to-watch'?'watching':item.status==='watching'?'completed':item.status==='on-hold'?'watching':null;
+  const nextBtn = nextStatus && WL_STATUSES[nextStatus]
+    ? `<button style="background:${WL_STATUSES[nextStatus].color}18;color:${WL_STATUSES[nextStatus].color};border:1px solid ${WL_STATUSES[nextStatus].color}33;padding:3px 8px;border-radius:6px;font-size:0.67rem;cursor:pointer;font-weight:600;" onclick="event.stopPropagation();moveWLItem(${idx},'${nextStatus}')">${WL_STATUSES[nextStatus].label}</button>` : '';
+  return `
+    <div class="wl-card" onclick="showWLDetail(${idx})">
+      <div class="wl-card-thumb" style="${item.thumb?'':'background:linear-gradient(135deg,'+getCardGrad(item.type)+')'}">
+        ${item.thumb?`<img src="${item.thumb}" alt="" onerror="this.style.display='none'" loading="lazy">`:`<span style="font-size:2.2rem;">${meta.emoji}</span>`}
+        <div class="wl-type-badge">${meta.emoji} ${(type=>type.charAt(0).toUpperCase()+type.slice(1))(item.type||'other')}</div>
+        <div class="wl-status-badge" style="background:${status.color}33;color:${status.color};">${status.label}</div>
+      </div>
+      <div class="wl-card-body">
+        <div class="wl-card-title">${escHtml(item.title)}</div>
+        ${domain?`<div class="wl-card-url">${domain}</div>`:''}
+        ${stars?`<div style="color:#fbbf24;font-size:0.75rem;">${stars}</div>`:''}
+        ${item.note?`<div class="wl-card-note">${escHtml(item.note.slice(0,70))}${item.note.length>70?'…':''}</div>`:''}
+        ${prog}
+      </div>
+      <div class="wl-card-footer" onclick="event.stopPropagation()">
+        ${item.url?`<a href="${item.url}" target="_blank" class="btn btn-primary btn-sm" style="font-size:0.7rem;padding:4px 10px;">Open</a>`:''}
+        ${nextBtn}
+        <div style="margin-left:auto;display:flex;gap:3px;">
+          <button class="btn btn-ghost btn-sm" onclick="editWLItem(${idx})" style="padding:4px 7px;font-size:0.72rem;">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteWLItem(${idx})" style="padding:4px 7px;font-size:0.72rem;">🗑</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function showWLDetail(idx) {
+  const item   = state.watchlist[idx]; if (!item) return;
+  const meta   = WL_TYPE_META[item.type]||{emoji:'🔗',label:'Other'};
+  const status = WL_STATUSES[item.status]||{label:item.status,color:'#60a5fa'};
+  const stars  = item.rating?'★'.repeat(item.rating)+'☆'.repeat(5-item.rating):'Not rated';
+  openModal(`
+    <div class="modal">
+      <div class="modal-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:1.8rem;">${meta.emoji}</span>
+          <div><div class="modal-title" style="font-size:1rem;">${escHtml(item.title)}</div>
+            <div style="font-size:0.75rem;font-weight:600;color:${status.color};">${status.label}</div></div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      ${item.thumb?`<img src="${item.thumb}" alt="" style="width:100%;height:150px;object-fit:cover;border-radius:var(--radius-sm);margin-bottom:14px;" onerror="this.style.display='none'">`:''}
+      ${item.status==='watching'&&item.progress>0?`<div style="margin-bottom:14px;"><div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-2);margin-bottom:6px;"><span>${item.progressNote||'Progress'}</span><span style="color:var(--accent);font-weight:700;">${item.progress}%</span></div><div style="height:8px;background:var(--bg-3);border-radius:99px;overflow:hidden;"><div style="height:100%;width:${item.progress}%;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:99px;"></div></div></div>`:''}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+        <div style="background:var(--bg-3);padding:10px;border-radius:var(--radius-sm);"><div style="font-size:0.65rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">Type</div><div style="font-weight:600;margin-top:2px;">${meta.emoji} ${item.type||'other'}</div></div>
+        <div style="background:var(--bg-3);padding:10px;border-radius:var(--radius-sm);"><div style="font-size:0.65rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">Rating</div><div style="color:#fbbf24;margin-top:2px;">${stars}</div></div>
+      </div>
+      ${item.note?`<div style="background:var(--bg-3);padding:12px;border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text-2);line-height:1.6;margin-bottom:12px;white-space:pre-wrap;">${escHtml(item.note)}</div>`:''}
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${item.url?`<a href="${item.url}" target="_blank" class="btn btn-primary btn-sm">Open Link →</a>`:''}
+        <button class="btn btn-ghost btn-sm" onclick="closeModal();editWLItem(${idx})">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="closeModal();deleteWLItem(${idx})">🗑 Delete</button>
+      </div>
+    </div>`);
 }
 
 function getCardGrad(type) {
   const grads = { movie:'#1a0533,#2d0f59', series:'#0a1f3c,#0e3060', youtube:'#3c0a0a,#6b1010', reel:'#1a0533,#6b1069', article:'#0a2010,#144a20', podcast:'#1a1a0a,#3d3d0f', other:'#0a1428,#1a2844' };
-  return grads[type] || grads.other;
+  return grads[type]||grads.other;
 }
 
 function escHtml(str) {
@@ -3808,13 +3991,22 @@ function escHtml(str) {
 
 function showAddLinkModal(editIdx=-1) {
   const item = editIdx>=0 ? state.watchlist[editIdx] : {};
+  const statuses = [
+    {v:'to-watch',  l:'👀 To Watch'},
+    {v:'watching',  l:'▶️ Watching'},
+    {v:'on-hold',   l:'⏸ On Hold'},
+    {v:'completed', l:'✅ Completed'},
+    {v:'dropped',   l:'🗑 Dropped'},
+  ];
   openModal(`
     <div class="modal">
       <div class="modal-header">
-        <div class="modal-title">${editIdx>=0?'Edit':'Add'} to Watchlist</div>
+        <div class="modal-title">${editIdx>=0?'Edit':'Add to'} Watchlist</div>
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
-      <div class="form-group"><label class="form-label">Title *</label><input class="form-input" id="wl-title" value="${escHtml(item.title||'')}" placeholder="Movie name, video title, article..."></div>
+      <div class="form-group"><label class="form-label">Title *</label>
+        <input class="form-input" id="wl-title" value="${escHtml(item.title||'')}" placeholder="Movie name, video title, article...">
+      </div>
       <div class="form-group"><label class="form-label">URL / Link</label>
         <input class="form-input" id="wl-url" value="${escHtml(item.url||'')}" placeholder="https://..." oninput="autoFetchThumb()">
       </div>
@@ -3825,18 +4017,31 @@ function showAddLinkModal(editIdx=-1) {
           </select>
         </div>
         <div class="form-group"><label class="form-label">Status</label>
-          <select class="form-input" id="wl-status">
-            <option value="to-watch" ${item.status==='to-watch'||!item.status?'selected':''}>👀 To Watch</option>
-            <option value="later" ${item.status==='later'?'selected':''}>🕐 Later</option>
-            <option value="completed" ${item.status==='completed'?'selected':''}>✅ Completed</option>
+          <select class="form-input" id="wl-status" onchange="toggleProgressField()">
+            ${statuses.map(s=>`<option value="${s.v}" ${(item.status||'to-watch')===s.v?'selected':''}>${s.l}</option>`).join('')}
           </select>
         </div>
+      </div>
+      <!-- Progress field (shown when status = watching) -->
+      <div class="form-group" id="wl-progress-wrap" style="${item.status==='watching'?'':'display:none;'}">
+        <label class="form-label">Progress (episodes / pages / %)</label>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <input type="range" min="0" max="100" value="${item.progress||0}" id="wl-progress-range" oninput="document.getElementById('wl-progress-val').textContent=this.value+'%'" style="flex:1;accent-color:var(--accent);">
+          <span id="wl-progress-val" style="font-size:0.85rem;font-weight:700;color:var(--accent);width:40px;">${item.progress||0}%</span>
+        </div>
+        <input type="text" class="form-input" id="wl-progress-note" value="${escHtml(item.progressNote||'')}" placeholder="e.g. Ep 5, Chapter 3, Page 120..." style="margin-top:6px;">
+      </div>
+      <div class="form-group"><label class="form-label">Rating</label>
+        <div id="wl-star-rating" style="display:flex;gap:4px;font-size:1.4rem;cursor:pointer;" data-rating="${item.rating||0}">
+          ${[1,2,3,4,5].map(n=>`<span onclick="setWLRating(${n})" style="color:${(item.rating||0)>=n?'#fbbf24':'var(--text-3)'}" data-star="${n}">★</span>`).join('')}
+        </div>
+        <input type="hidden" id="wl-rating" value="${item.rating||0}">
       </div>
       <div class="form-group"><label class="form-label">Tags (comma separated)</label>
         <input class="form-input" id="wl-tags" value="${escHtml(item.tags||'')}" placeholder="action, thriller, sci-fi">
       </div>
       <div class="form-group"><label class="form-label">Notes / Review</label>
-        <textarea class="form-input" id="wl-note" rows="3" placeholder="Personal notes, rating, review...">${escHtml(item.note||'')}</textarea>
+        <textarea class="form-input" id="wl-note" rows="2" placeholder="Personal notes, review...">${escHtml(item.note||'')}</textarea>
       </div>
       <div class="form-group"><label class="form-label">Thumbnail URL (optional)</label>
         <input class="form-input" id="wl-thumb" value="${escHtml(item.thumb||'')}" placeholder="https://...image.jpg">
@@ -3847,6 +4052,19 @@ function showAddLinkModal(editIdx=-1) {
       </div>
     </div>
   `);
+}
+
+function toggleProgressField() {
+  const status = document.getElementById('wl-status')?.value;
+  const wrap = document.getElementById('wl-progress-wrap');
+  if (wrap) wrap.style.display = status === 'watching' ? '' : 'none';
+}
+
+function setWLRating(n) {
+  document.getElementById('wl-rating').value = n;
+  document.querySelectorAll('#wl-star-rating [data-star]').forEach(s => {
+    s.style.color = parseInt(s.dataset.star) <= n ? '#fbbf24' : 'var(--text-3)';
+  });
 }
 
 function autoFetchThumb() {
@@ -3863,17 +4081,23 @@ function saveWLItem(editIdx) {
   const title = document.getElementById('wl-title').value.trim();
   if (!title) { toast('Title is required','error'); return; }
   const item = {
-    title, url: document.getElementById('wl-url').value.trim(),
-    type: document.getElementById('wl-type').value,
-    status: document.getElementById('wl-status').value,
-    tags: document.getElementById('wl-tags').value.trim(),
-    note: document.getElementById('wl-note').value.trim(),
-    thumb: document.getElementById('wl-thumb').value.trim(),
-    added: editIdx>=0 ? (state.watchlist[editIdx].added||new Date().toISOString()) : new Date().toISOString(),
+    title,
+    url:          document.getElementById('wl-url').value.trim(),
+    type:         document.getElementById('wl-type').value,
+    status:       document.getElementById('wl-status').value,
+    progress:     parseInt(document.getElementById('wl-progress-range')?.value||0),
+    progressNote: document.getElementById('wl-progress-note')?.value.trim()||'',
+    rating:       parseInt(document.getElementById('wl-rating')?.value||0),
+    tags:         document.getElementById('wl-tags').value.trim(),
+    note:         document.getElementById('wl-note').value.trim(),
+    thumb:        document.getElementById('wl-thumb').value.trim(),
+    added:        editIdx>=0 ? (state.watchlist[editIdx].added||new Date().toISOString()) : new Date().toISOString(),
   };
   if (editIdx>=0) { state.watchlist[editIdx]=item; toast('Updated ✓'); }
   else { state.watchlist.unshift(item); toast('Added to watchlist ✓'); }
-  saveState(); closeModal(); renderWatchlist();
+  saveState();
+  closeModal();
+  renderWatchlist();
 }
 
 function editWLItem(i) { showAddLinkModal(i); }
@@ -4802,7 +5026,7 @@ function exportData(format = 'json') {
   if (format === 'json') {
     const data = { exportDate: new Date().toISOString(), favorites: state.favorites, subscriptions: state.subscriptions, watchlist: state.watchlist||[], tasks: state.tasks||[], rituals: state.rituals||[], notes: state.notes||[], goals: state.goals||[], wsLinks: state.wsLinks||[], vaultTools: state.vaultTools, settings: state.settings };
     const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-    _downloadBlob(blob, `aihubpro-backup-${ts}.json`);
+    _downloadBlob(blob, `aivault-backup-${ts}.json`);
     toast('JSON exported ✓');
   } else if (format === 'csv') {
     const rows = [['Type','Name/Title','URL','Status/Notes','Date']];
@@ -4812,10 +5036,10 @@ function exportData(format = 'json') {
     (state.goals||[]).forEach(g => rows.push(['Goal', g.title, '', g.progress+'%', g.created||'']));
     const csv = rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
     const blob = new Blob([csv], {type:'text/csv'});
-    _downloadBlob(blob, `aihubpro-export-${ts}.csv`);
+    _downloadBlob(blob, `aivault-export-${ts}.csv`);
     toast('CSV exported ✓');
   } else if (format === 'md') {
-    let md = `# AI Hub Pro Export\n_Exported ${new Date().toLocaleString()}_\n\n`;
+    let md = `# AI Vault Export\n_Exported ${new Date().toLocaleString()}_\n\n`;
     md += `## 📋 Tasks (${(state.tasks||[]).length})\n`;
     (state.tasks||[]).forEach(t => { md += `- [${t.done?'x':' '}] ${t.text}\n`; });
     md += `\n## 💳 Subscriptions (${(state.subscriptions||[]).length})\n`;
@@ -4827,12 +5051,12 @@ function exportData(format = 'json') {
     md += `\n## 📝 Notes (${(state.notes||[]).length})\n`;
     (state.notes||[]).forEach(n => { md += `### ${n.title}\n${n.body}\n\n`; });
     const blob = new Blob([md], {type:'text/markdown'});
-    _downloadBlob(blob, `aihubpro-export-${ts}.md`);
+    _downloadBlob(blob, `aivault-export-${ts}.md`);
     toast('Markdown exported ✓');
   } else if (format === 'html') {
     const monthly = (state.subscriptions||[]).filter(s=>s.status==='active').reduce((a,s)=>a+parseFloat(s.monthly||0),0);
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>AI Hub Pro Report</title><style>body{font-family:system-ui;max-width:900px;margin:0 auto;padding:32px;background:#f8f9fa;color:#1a1a2e;}h1{background:linear-gradient(135deg,#6ee7b7,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;}h2{margin-top:28px;border-bottom:2px solid #e0e0e0;padding-bottom:8px;}.card{background:#fff;border-radius:12px;padding:16px;margin:10px 0;box-shadow:0 2px 8px rgba(0,0,0,0.08);}.stat{display:inline-block;background:#6ee7b722;border:1px solid #6ee7b7;border-radius:8px;padding:8px 16px;margin:6px;font-weight:600;}table{width:100%;border-collapse:collapse;}td,th{padding:10px;text-align:left;border-bottom:1px solid #eee;}th{background:#f0f0f0;font-size:0.8rem;text-transform:uppercase;}</style></head><body>
-      <h1>🤖 AI Hub Pro Export</h1>
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>AI Vault Report</title><style>body{font-family:system-ui;max-width:900px;margin:0 auto;padding:32px;background:#f8f9fa;color:#1a1a2e;}h1{background:linear-gradient(135deg,#6ee7b7,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;}h2{margin-top:28px;border-bottom:2px solid #e0e0e0;padding-bottom:8px;}.card{background:#fff;border-radius:12px;padding:16px;margin:10px 0;box-shadow:0 2px 8px rgba(0,0,0,0.08);}.stat{display:inline-block;background:#6ee7b722;border:1px solid #6ee7b7;border-radius:8px;padding:8px 16px;margin:6px;font-weight:600;}table{width:100%;border-collapse:collapse;}td,th{padding:10px;text-align:left;border-bottom:1px solid #eee;}th{background:#f0f0f0;font-size:0.8rem;text-transform:uppercase;}</style></head><body>
+      <h1>🤖 AI Vault Export</h1>
       <p style="color:#666;">${new Date().toLocaleString()}</p>
       <div><span class="stat">⭐ ${(state.favorites||[]).length} Favorites</span><span class="stat">💳 $${monthly.toFixed(0)}/mo Spend</span><span class="stat">📋 ${(state.tasks||[]).filter(t=>!t.done).length} Active Tasks</span><span class="stat">🎯 ${(state.goals||[]).length} Goals</span></div>
       <h2>💳 Subscriptions</h2><table><tr><th>Name</th><th>Monthly</th><th>Status</th><th>Renewal</th></tr>${(state.subscriptions||[]).map(s=>`<tr><td>${s.name}</td><td>$${s.monthly||0}</td><td>${s.status}</td><td>${s.renewal||'—'}</td></tr>`).join('')}</table>
@@ -4840,7 +5064,7 @@ function exportData(format = 'json') {
       <h2>📝 Notes</h2>${(state.notes||[]).map(n=>`<div class="card"><strong>${n.title}</strong><p style="white-space:pre-wrap;color:#555;">${n.body}</p></div>`).join('')}
     </body></html>`;
     const blob = new Blob([html], {type:'text/html'});
-    _downloadBlob(blob, `aihubpro-report-${ts}.html`);
+    _downloadBlob(blob, `aivault-report-${ts}.html`);
     toast('HTML report exported ✓');
   }
 }
@@ -4980,7 +5204,7 @@ function init() {
   }
 
   // Check for remembered user
-  const remEmail = localStorage.getItem('aihubpro_remember');
+  const remEmail = localStorage.getItem('aivault_remember');
   if (remEmail && !state.currentUser) {
     const users = getUsers();
     if (users[remEmail]) {
